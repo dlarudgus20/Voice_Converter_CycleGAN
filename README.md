@@ -1,3 +1,10 @@
+# 2019 1학기 인공지능 CycleGAN 과제
+## 변경사항
+- download.py 오류 해결
+- GPU 메모리 할당 최소화
+- GPU 번호 선택 가능
+- Tensorflow Warning 제거
+
 # Voice Converter CycleGAN
 
 Lei Mao
@@ -12,7 +19,6 @@ Cycle-consistent adversarial networks (CycleGAN) has been widely used for image 
 <p align="center">
     <img src = "./figures/teaser_high_res.png" width="100%">
 </p>
-
 
 ## Dependencies
 
