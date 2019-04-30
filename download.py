@@ -1,4 +1,3 @@
-
 import os
 import random
 import progressbar
@@ -11,11 +10,9 @@ pbar = None
 def progress_bar(block_num, block_size, total_size):
     global pbar
     if pbar is None:
-
-        # pbar = progressbar.ProgressBar(maxval = total_size)
-        # Customized progress bar
         widgets = [progressbar.Percentage(), ' ', progressbar.Bar(marker = '>', left = '[', right = ']'), ' ', progressbar.ETA(), ' ', progressbar.FileTransferSpeed()] 
         pbar = progressbar.ProgressBar(widgets = widgets, maxval = total_size)
+        pbar.start()
 
     downloaded = block_num * block_size
     if downloaded < total_size:
@@ -88,6 +85,8 @@ if __name__ == '__main__':
     download_dir = argv.download_dir
     data_dir = argv.data_dir
     datasets = argv.datasets
+
+    os.system("rm -rf "+download_dir)
 
     if datasets == 'vcc2016' or datasets == 'VCC2016':
         download_vcc2016(download_dir = download_dir, data_dir = data_dir)

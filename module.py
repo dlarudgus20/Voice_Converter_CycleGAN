@@ -29,15 +29,15 @@ def conv1d_layer(
     kernel_initializer = None,
     name = None):
 
-    conv_layer = tf.layers.conv1d(
-        inputs = inputs,
+    conv_layer = tf.keras.layers.Conv1D(
+        # inputs = inputs,
         filters = filters,
         kernel_size = kernel_size,
         strides = strides,
         padding = padding,
         activation = activation,
         kernel_initializer = kernel_initializer,
-        name = name)
+        name = name)(inputs)
 
     return conv_layer
 
@@ -51,15 +51,15 @@ def conv2d_layer(
     kernel_initializer = None,
     name = None):
 
-    conv_layer = tf.layers.conv2d(
-        inputs = inputs,
+    conv_layer = tf.keras.layers.Conv2D(
+        # inputs = inputs,
         filters = filters,
         kernel_size = kernel_size,
         strides = strides,
         padding = padding,
         activation = activation,
         kernel_initializer = kernel_initializer,
-        name = name)
+        name = name)(inputs)
 
     return conv_layer
 
@@ -208,7 +208,8 @@ def discriminator(inputs, reuse = False, scope_name = 'discriminator'):
         d3 = downsample2d_block(inputs = d2, filters = 1024, kernel_size = [6, 3], strides = [1, 2], name_prefix = 'downsample2d_block3_')
 
         # Output
-        o1 = tf.layers.dense(inputs = d3, units = 1, activation = tf.nn.sigmoid)
+        # o1 = tf.keras.layers.Dense(inputs = d3, units = 1, activation = tf.nn.sigmoid)
+        o1 = tf.keras.layers.Dense(units = 1, activation = tf.nn.sigmoid)(d3)
 
         return o1
 

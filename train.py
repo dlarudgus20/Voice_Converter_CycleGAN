@@ -12,7 +12,7 @@ def train(train_A_dir, train_B_dir, model_dir, model_name, random_seed, validati
 
     np.random.seed(random_seed)
 
-    num_epochs = 5000
+    num_epochs = 1000
     mini_batch_size = 1 # mini_batch_size = 1 is better
     generator_learning_rate = 0.0002
     generator_learning_rate_decay = generator_learning_rate / 200000
@@ -77,14 +77,6 @@ def train(train_A_dir, train_B_dir, model_dir, model_name, random_seed, validati
 
     for epoch in range(num_epochs):
         print('Epoch: %d' % epoch)
-        '''
-        if epoch > 60:
-            lambda_identity = 0
-        if epoch > 1250:
-            generator_learning_rate = max(0, generator_learning_rate - 0.0000002)
-            discriminator_learning_rate = max(0, discriminator_learning_rate - 0.0000001)
-        '''
-
         start_time_epoch = time.time()
 
         dataset_A, dataset_B = sample_train_data(dataset_A = coded_sps_A_norm, dataset_B = coded_sps_B_norm, n_frames = n_frames)
@@ -107,7 +99,6 @@ def train(train_A_dir, train_B_dir, model_dir, model_name, random_seed, validati
             generator_loss, discriminator_loss = model.train(input_A = dataset_A[start:end], input_B = dataset_B[start:end], lambda_cycle = lambda_cycle, lambda_identity = lambda_identity, generator_learning_rate = generator_learning_rate, discriminator_learning_rate = discriminator_learning_rate)
 
             if i % 50 == 0:
-                #print('Iteration: %d, Generator Loss : %f, Discriminator Loss : %f' % (num_iterations, generator_loss, discriminator_loss))
                 print('Iteration: {:07d}, Generator Learning Rate: {:.7f}, Discriminator Learning Rate: {:.7f}, Generator Loss : {:.3f}, Discriminator Loss : {:.3f}'.format(num_iterations, generator_learning_rate, discriminator_learning_rate, generator_loss, discriminator_loss))
 
         model.save(directory = model_dir, filename = model_name)
@@ -180,6 +171,7 @@ if __name__ == '__main__':
     parser.add_argument('--validation_B_dir', type = str, help = 'Convert validation B after each training epoch. If set none, no conversion would be done during the training.', default = validation_B_dir_default)
     parser.add_argument('--output_dir', type = str, help = 'Output directory for converted validation voices.', default = output_dir_default)
     parser.add_argument('--tensorboard_log_dir', type = str, help = 'TensorBoard log directory.', default = tensorboard_log_dir_default)
+    parser.add_argument('--gpu_id', type = str, help = 'GPU index for training', default = "0")
 
     argv = parser.parse_args()
 
@@ -193,4 +185,5 @@ if __name__ == '__main__':
     output_dir = argv.output_dir
     tensorboard_log_dir = argv.tensorboard_log_dir
 
+    os.environ["CUDA_VISIBLE_DEVICES"] = argv.gpu_id
     train(train_A_dir = train_A_dir, train_B_dir = train_B_dir, model_dir = model_dir, model_name = model_name, random_seed = random_seed, validation_A_dir = validation_A_dir, validation_B_dir = validation_B_dir, output_dir = output_dir, tensorboard_log_dir = tensorboard_log_dir)

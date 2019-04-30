@@ -1,0 +1,7 @@
+data/*
+download/*
+validation_output/*
+train_log/*
+model/*
+log/*
+*.pyc

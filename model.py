@@ -19,7 +19,10 @@ class CycleGAN(object):
         self.optimizer_initializer()
 
         self.saver = tf.train.Saver()
-        self.sess = tf.Session()
+
+        tf_cfg = tf.ConfigProto()
+        tf_cfg.gpu_options.allow_growth = True
+        self.sess = tf.Session(config=tf_cfg)
         self.sess.run(tf.global_variables_initializer())
 
         if self.mode == 'train':
