@@ -21,7 +21,7 @@ class CycleGAN(object):
         self.saver = tf.train.Saver()
 
         tf_cfg = tf.ConfigProto()
-        tf_cfg.gpu_options.allow_growth = True
+        tf_cfg.gpu_options.per_process_gpu_memory_fraction = 0.9
         self.sess = tf.Session(config=tf_cfg)
         self.sess.run(tf.global_variables_initializer())
 
