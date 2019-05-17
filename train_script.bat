@@ -1,0 +1,1 @@
+python train.py --train_A_dir ../vcc2016_training/SF1 --train_B_dir ../vcc2016_training/TM2 --model_dir ../model/sf1_tm2 --model_name sf1_tm2.ckpt --random_seed 0 --validation_A_dir ../evaluation_all/SF1 --validation_B_dir ../evaluation_all/TM2 --output_dir ../validation_output --tensorboard_log_dir ../tensorboard_log
